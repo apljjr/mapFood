@@ -1,4 +1,4 @@
-package br.com.codenation.mapfood.resource;
+package br.com.codenation.mapfood.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +17,4 @@ public class Teste {
     public String teste () {
         return "Teste";
     }
-
-
 }
