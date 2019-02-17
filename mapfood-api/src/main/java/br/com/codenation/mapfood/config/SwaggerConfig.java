@@ -20,7 +20,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket greetingApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.codenation.mapfood.resouce"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.codenation.mapfood.resource"))
                 .build()
                 .apiInfo(metaData());
 

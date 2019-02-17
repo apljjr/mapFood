@@ -1,4 +1,4 @@
-package br.com.codenation.mapfood.resouce;
+package br.com.codenation.mapfood.resource;
 
 import br.com.codenation.mapfood.document.Products;
 import br.com.codenation.mapfood.repository.ProductsRepository;
