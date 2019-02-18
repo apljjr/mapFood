@@ -1,5 +1,6 @@
 package br.com.codenation.mapfood.config;
 
+import br.com.codenation.mapfood.repository.RestaurantsRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +8,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackageClasses = RestaurantsRepository.class)
 public class MongoDBConfig extends AbstractMongoConfiguration {
 
   @Override
