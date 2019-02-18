@@ -1,6 +1,6 @@
 package br.com.codenation.mapfood.service.impl;
 
-import br.com.codenation.mapfood.model.Motorcyclist;
+import br.com.codenation.mapfood.document.Motorcyclist;
 import br.com.codenation.mapfood.repository.MotocyclistRepository;
 import br.com.codenation.mapfood.service.MotorcyclistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,6 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     private MotocyclistRepository repository;
 
     public List<Motorcyclist> findByAvailable(){
-        return repository.findByAvailable(true);
+        return repository.findAll();
     }
 }

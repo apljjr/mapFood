@@ -1,6 +1,6 @@
 package br.com.codenation.mapfood.service;
 
-import br.com.codenation.mapfood.model.Motorcyclist;
+import br.com.codenation.mapfood.document.Motorcyclist;
 
 import java.util.List;
 
