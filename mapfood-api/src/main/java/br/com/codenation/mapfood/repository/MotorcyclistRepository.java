@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface MotorcyclistRepository extends MongoRepository<Motorcyclist, ObjectId>{
 
-    Motorcyclist findBy_Id(ObjectId _id);
-
     List<Motorcyclist> findByLocationWithin(Circle c);
 
 }

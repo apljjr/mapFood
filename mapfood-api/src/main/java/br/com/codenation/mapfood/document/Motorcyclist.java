@@ -13,22 +13,14 @@ public class Motorcyclist {
 
     @Id
     private ObjectId _id;
-
     private GeoJsonPoint location;
 
-    @Field("original_id")
-    private String originalId;
+    private String original_id;
 
     //private Boolean available;
 
     public Motorcyclist() {
        // this.available = true;
     }
-
-
-    // ObjectId needs to be converted to string
-    public String getId() { return _id.toHexString(); }
-    public void setId(ObjectId _id) { this._id = _id; }
-
 
 }

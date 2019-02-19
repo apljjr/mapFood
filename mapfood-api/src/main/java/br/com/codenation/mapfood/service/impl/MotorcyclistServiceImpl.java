@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class MotorcyclistServiceImpl implements MotorcyclistService {
 
-    @Autowired
+  //  @Autowired
     private MotorcyclistRepository repository;
 
     public List<Motorcyclist> findByAvailable(){

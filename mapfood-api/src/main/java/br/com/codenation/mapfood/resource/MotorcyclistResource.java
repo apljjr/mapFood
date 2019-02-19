@@ -1,7 +1,7 @@
 package br.com.codenation.mapfood.resource;
 
 import br.com.codenation.mapfood.document.Motorcyclist;
-import br.com.codenation.mapfood.service.MotorcyclistService;
+import br.com.codenation.mapfood.repository.MotorcyclistRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ import java.util.List;
 public class MotorcyclistResource {
 
     @Autowired
-    private MotorcyclistService service;
+    private MotorcyclistRepository repository;
 
     @ApiOperation(value = "Find motorcyclist")
-    @GetMapping
+    @GetMapping(value = "/")
     public List<Motorcyclist> getAllAvailable(){
 
-        return service.findByAvailable();
+        return repository.findAll();
     }
 }

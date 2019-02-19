@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface RestaurantsRepository extends MongoRepository<Restaurant, ObjectId> {
+public interface
+RestaurantsRepository extends MongoRepository<Restaurant, ObjectId> {
     List<Restaurant> findByLocationWithin(Circle c);
 }
