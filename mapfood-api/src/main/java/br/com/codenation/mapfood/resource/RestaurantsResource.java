@@ -5,10 +5,12 @@ import br.com.codenation.mapfood.repository.RestaurantsRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Circle;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,13 +23,16 @@ public class RestaurantsResource {
     @Autowired
     private RestaurantsRepository restaurantsRepository;
 
-    @ApiOperation(value = "Find restaurants")
+    @ApiOperation(value = "Find restaurants within radius")
     @GetMapping (produces = "application/json")
-    public ResponseEntity<?> findRestaurants() {
+    public ResponseEntity<?> findRestaurantsWithinRadius(
+        @RequestParam double latitude, @RequestParam double longitude,
+        @RequestParam double radius) {
 
-        List<Restaurant> restaurantList;
+        Circle circle = new Circle(latitude, longitude, radius);
 
-        restaurantList = restaurantsRepository.findAll();
+        List<Restaurant> restaurantList =
+            restaurantsRepository.findByLocationWithin(circle);
 
         return new ResponseEntity<List>(restaurantList, HttpStatus.OK);
     }
