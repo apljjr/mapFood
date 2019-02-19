@@ -9,11 +9,13 @@ import org.springframework.data.geo.Circle;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Api (value = "Restaurant", description = "Manipulating Restaurant")
 @RestController
@@ -35,5 +37,14 @@ public class RestaurantsResource {
             restaurantsRepository.findByLocationWithin(circle);
 
         return new ResponseEntity<List>(restaurantList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Find restaurants by id")
+    @GetMapping (value = "/{id}", produces = "application/json")
+    public ResponseEntity<?> findRestaurantById(@PathVariable String id) {
+        Optional<Restaurant> restaurantOptional =
+            restaurantsRepository.findById(id);
+
+        return new ResponseEntity<>(restaurantOptional.get(), HttpStatus.OK);
     }
 }
