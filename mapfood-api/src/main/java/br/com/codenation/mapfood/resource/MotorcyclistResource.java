@@ -13,7 +13,7 @@ import java.util.List;
 
 @Api(value = "Motorcyclist", description = "Manipulating Motorcyclist")
 @RestController
-@RequestMapping("/motorcyclist")
+@RequestMapping(value = "/motorcyclists")
 public class MotorcyclistResource {
 
     @Autowired
@@ -22,6 +22,7 @@ public class MotorcyclistResource {
     @ApiOperation(value = "Find motorcyclist")
     @GetMapping
     public List<Motorcyclist> getAllAvailable(){
+
         return service.findByAvailable();
     }
 }
