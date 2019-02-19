@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class MotorcyclistServiceImpl implements MotorcyclistService {
 
-    @Autowired
+   // @Autowired
     private MotocyclistRepository repository;
 
     public List<Motorcyclist> findByAvailable(){
-        return repository.findAll();
+        return null;
     }
 }
