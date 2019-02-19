@@ -1,7 +1,5 @@
 package br.com.codenation.mapfood.resource;
 
-import br.com.codenation.mapfood.document.Product;
-import br.com.codenation.mapfood.repository.ProductsRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api (value = "Product", description = "Manipulating Product")
+@Api (value = "Itens", description = "Manipulating Itens")
 @RestController
-@RequestMapping (value = "/product")
+@RequestMapping (value = "/itens")
 public class ProductsResource {
 
-    @Autowired
-    private ProductsRepository productsRepository;
 
-    @ApiOperation(value = "Find all the products")
+    @ApiOperation(value = "Find all the itens by restaurant")
     @GetMapping (value = "/findAll", produces = "application/json")
-    public ResponseEntity<?> findAllProducts () {
-        List<Product> productsList = new ArrayList<>();
+    public ResponseEntity<?> findAllItens () {
         try {
-            productsList = productsRepository.findAll();
+//            productsList = productsRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<List>(productsList, HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "Find all the products by restaurant")
-    @GetMapping (value = "/productsByRestaurant/{restaurantId}", produces = "application/json")
-    public ResponseEntity<?> findProductsByRestaurant (@PathVariable(value = "restaurantId") String restaurantId) {
+//        return new ResponseEntity<List>(productsList, HttpStatus.OK);
         return null;
     }
 
