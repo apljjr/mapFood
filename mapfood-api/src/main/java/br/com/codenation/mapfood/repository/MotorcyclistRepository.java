@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface MotorcyclistRepository extends MongoRepository<Motorcyclist, ObjectId>{
+public interface MotorcyclistRepository extends MongoRepository<Motorcyclist, String>{
 
     List<Motorcyclist> findByLocationWithin(Circle c);
 

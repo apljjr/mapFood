@@ -17,10 +17,6 @@ public class Motorcyclist {
 
     private String original_id;
 
-    //private Boolean available;
-
-    public Motorcyclist() {
-       // this.available = true;
-    }
+    private Boolean available;
 
 }
