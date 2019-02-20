@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Motorcyclist {
 
     @Id
-    private ObjectId _id;
+    private String _id;
     private GeoJsonPoint location;
 
     private String original_id;

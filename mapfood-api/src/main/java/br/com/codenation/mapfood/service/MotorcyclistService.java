@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface MotorcyclistService {
 
-    List<Motorcyclist> findByAvailable(GeoJsonPoint point, double radius);
+    List<Motorcyclist> findAllNearByAvailable(GeoJsonPoint point, double distance);
 
     List<Motorcyclist> findAll();
 
+    void save(Motorcyclist motorcyclist);
+
+    Motorcyclist findById(String id);
 }

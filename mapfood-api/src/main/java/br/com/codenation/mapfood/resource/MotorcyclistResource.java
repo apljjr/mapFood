@@ -6,11 +6,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "Motorcyclist", description = "Manipulating Motorcyclist")
@@ -22,18 +20,31 @@ public class MotorcyclistResource {
     private MotorcyclistService service;
 
     @ApiOperation(value = "Find all registered motorcyclists")
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public List<Motorcyclist> getAll() {
 
         return service.findAll();
     }
 
     @ApiOperation(value = "Find all available motorcyclists near a point")
-    @GetMapping(value = "/available{radius}")
-    public List<Motorcyclist> getAllAvailable(@PathVariable double radius) {
+    @GetMapping(value = "/available-{distance}")
+    public List<Motorcyclist> getAllAvailable(@PathVariable double distance) {
 
-        GeoJsonPoint point = new GeoJsonPoint(-30.0277, -51.2287);
+        GeoJsonPoint point = new GeoJsonPoint(-51.2287,-30.0277 );
 
-        return service.findByAvailable(point,radius);
+        return service.findAllNearByAvailable(point,distance);
+    }
+
+    @ApiOperation(value = "Find the a motorcyclist by id")
+    @PutMapping(value = "/{id}")
+    public Motorcyclist getById(@PathVariable("id") String id) {
+        return service.findById(id);
+    }
+
+    @ApiOperation(value = "Update the available value of a motorcyclist")
+    @PutMapping(value = "/{id}")
+    public void updateById(@PathVariable("id") String id, @Valid @RequestBody Motorcyclist motorcyclist) {
+        motorcyclist.set_id(id);
+        service.save(motorcyclist);
     }
 }
