@@ -28,7 +28,7 @@ public class ItemsResource {
     public ResponseEntity<?> findAllItensByRestaurant (@PathVariable("idRestaurant") String idRestaurant) {
         Restaurant restaurant = new Restaurant();
         try {
-            restaurant = restaurantsRepository.findItemsByRestanrant(idRestaurant);
+//            restaurant = restaurantsRepository.findItemsByRestanrant(idRestaurant);
         } catch (Exception e) {
             e.printStackTrace();
         }
