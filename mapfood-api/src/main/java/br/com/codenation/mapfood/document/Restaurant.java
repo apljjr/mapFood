@@ -15,7 +15,7 @@ import java.util.List;
 public class Restaurant {
 
     @Id
-    private String _id;
+    private String id;
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
     private String restaurant;
