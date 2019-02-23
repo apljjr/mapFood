@@ -28,23 +28,26 @@ public class MotorcyclistResource {
 
     @ApiOperation(value = "Find all available motorcyclists near a point")
     @GetMapping(value = "/available-{distance}")
-    public List<Motorcyclist> getAllAvailable(@PathVariable double distance) {
+    public Motorcyclist getTheNearestMotorcyclist(@PathVariable double distance) {
 
-        GeoJsonPoint point = new GeoJsonPoint(-51.2287,-30.0277 );
+        GeoJsonPoint point = new GeoJsonPoint(-51.210998,-30.034283 );
 
-        return service.findAllNearByAvailable(point,distance);
+        return service.findAllAndAvailableNear(point,distance);
     }
 
-    @ApiOperation(value = "Find the a motorcyclist by id")
-    @PutMapping(value = "/{id}")
-    public Motorcyclist getById(@PathVariable("id") String id) {
-        return service.findById(id);
-    }
+//    @ApiOperation(value = "Find the a motorcyclist by id")
+//    @PutMapping(value = "/{id}")
+//    public Motorcyclist getById(@PathVariable("id") String id) {
+//        return service.findById(id);
+//    }
+//
+//    @ApiOperation(value = "Update the available value of a motorcyclist")
+//    @PutMapping(value = "/{id}")
+//    public void updateById(@PathVariable("id") String id, @Valid @RequestBody Motorcyclist motorcyclist) {
+//        motorcyclist.set_id(id);
+//        service.save(motorcyclist);
+//    }
 
-    @ApiOperation(value = "Update the available value of a motorcyclist")
-    @PutMapping(value = "/{id}")
-    public void updateById(@PathVariable("id") String id, @Valid @RequestBody Motorcyclist motorcyclist) {
-        motorcyclist.set_id(id);
-        service.save(motorcyclist);
-    }
+
+
 }

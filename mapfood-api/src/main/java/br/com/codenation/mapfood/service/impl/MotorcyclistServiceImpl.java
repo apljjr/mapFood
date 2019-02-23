@@ -19,14 +19,14 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     @Autowired
     private MotorcyclistRepository repository;
 
-    public List<Motorcyclist> findAllNearByAvailable(GeoJsonPoint point, double distance) {
+    public Motorcyclist getTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
 
 
         List<Motorcyclist> allMotorcyclist =
                 repository.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(distance, Metrics.KILOMETERS));
 
 
-        return allMotorcyclist.stream().filter(m -> m.getAvailable() == true).collect(Collectors.toList());
+        return allMotorcyclist.stream().filter(m -> m.getAvailable()).findFirst().get().;
 
     }
 
