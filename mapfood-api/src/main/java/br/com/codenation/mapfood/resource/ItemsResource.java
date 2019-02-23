@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Api (value = "Itens", description = "Manipulating Itens")
 @RestController
@@ -26,14 +27,7 @@ public class ItemsResource {
     @ApiOperation(value = "Find all the itens by restaurant")
     @GetMapping (value = "/findAllItensByRestaurant/{idRestaurant}", produces = "application/json")
     public ResponseEntity<?> findAllItensByRestaurant (@PathVariable("idRestaurant") String idRestaurant) {
-        Restaurant restaurant = new Restaurant();
-        try {
-//            restaurant = restaurantsRepository.findItemsByRestanrant(idRestaurant);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<Restaurant>(restaurant, HttpStatus.OK);
+        Optional<Restaurant> restaurant = restaurantsRepository.findById(idRestaurant);
+        return new ResponseEntity<>(restaurant.get().getItems(), HttpStatus.OK);
     }
-
-
 }
