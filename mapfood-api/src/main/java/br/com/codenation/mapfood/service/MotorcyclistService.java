@@ -7,11 +7,14 @@ import java.util.List;
 
 public interface MotorcyclistService {
 
-    Motorcyclist getTheNearestMotorcyclist(GeoJsonPoint point, double distance);
-
     List<Motorcyclist> findAll();
 
-    void save(Motorcyclist motorcyclist);
+    public Motorcyclist findById(String id);
 
-    Motorcyclist findById(String id);
+    Motorcyclist findTheNearestMotorcyclist(GeoJsonPoint point, double distance);
+
+    public void turnOnAvailable(Motorcyclist motorcyclist);
+
+    public void turnOffAvailable(Motorcyclist motorcyclist);
+
 }

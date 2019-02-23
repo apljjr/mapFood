@@ -1,6 +1,7 @@
 package br.com.codenation.mapfood.service.impl;
 
 import br.com.codenation.mapfood.document.Motorcyclist;
+import br.com.codenation.mapfood.exception.MotorcyclistNotFoundException;
 import br.com.codenation.mapfood.repository.MotorcyclistRepository;
 import br.com.codenation.mapfood.service.MotorcyclistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MotorcyclistServiceImpl implements MotorcyclistService {
@@ -19,22 +19,24 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     @Autowired
     private MotorcyclistRepository repository;
 
-    public Motorcyclist getTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
+    public Motorcyclist findTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
 
 
         List<Motorcyclist> allMotorcyclist =
                 repository.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(distance, Metrics.KILOMETERS));
 
 
-        return allMotorcyclist.stream().filter(m -> m.getAvailable()).findFirst().get().;
+        return allMotorcyclist.stream().filter(Motorcyclist::getAvailable).findFirst().orElseThrow(MotorcyclistNotFoundException::new);
 
     }
 
+    @Override
     public void turnOnAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(true);
         repository.save(motorcyclist);
     }
 
+    @Override
     public void turnOffAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(false);
         repository.save(motorcyclist);
@@ -47,13 +49,8 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     }
 
     @Override
-    public void save(Motorcyclist motorcyclist) {
-        repository.save(motorcyclist);
-    }
-
-    @Override
     public Motorcyclist findById(String id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
     }
 
 

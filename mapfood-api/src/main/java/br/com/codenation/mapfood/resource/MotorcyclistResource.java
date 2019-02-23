@@ -32,7 +32,7 @@ public class MotorcyclistResource {
 
         GeoJsonPoint point = new GeoJsonPoint(-51.210998,-30.034283 );
 
-        return service.findAllAndAvailableNear(point,distance);
+        return service.findTheNearestMotorcyclist(point,distance);
     }
 
 //    @ApiOperation(value = "Find the a motorcyclist by id")
