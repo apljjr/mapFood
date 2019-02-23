@@ -7,6 +7,9 @@ import io.swagger.annotations.ApiOperation;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Circle;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +35,9 @@ public class RestaurantsResource {
         @RequestParam double latitude, @RequestParam double longitude,
         @RequestParam double radius) {
 
-        Circle circle = new Circle(latitude, longitude, radius);
-
-        List<Restaurant> restaurantList =
-            restaurantsRepository.findByLocationWithin(circle);
+        Point userLocation = new Point(longitude, latitude);
+        Distance distance = new Distance(radius, Metrics.KILOMETERS);
+        List<Restaurant> restaurantList = restaurantsRepository.findByLocationNear(userLocation, distance);
 
         return new ResponseEntity<List>(restaurantList, HttpStatus.OK);
     }
@@ -44,7 +46,7 @@ public class RestaurantsResource {
     @GetMapping (value = "/{id}", produces = "application/json")
     public ResponseEntity<?> findRestaurantById(@PathVariable String id) {
         Optional<Restaurant> restaurantOptional =
-            restaurantsRepository.findById(new ObjectId(id));
+            restaurantsRepository.findById(id);
 
         return new ResponseEntity<>(restaurantOptional.get(), HttpStatus.OK);
     }
