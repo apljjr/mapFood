@@ -30,6 +30,16 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
 
     }
 
+    public void turnOnAvailable(Motorcyclist motorcyclist){
+        motorcyclist.setAvailable(true);
+        repository.save(motorcyclist);
+    }
+
+    public void turnOffAvailable(Motorcyclist motorcyclist){
+        motorcyclist.setAvailable(false);
+        repository.save(motorcyclist);
+    }
+
     @Override
     public List<Motorcyclist> findAll() {
 
