@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "orders")
@@ -16,6 +17,7 @@ public class Order {
     private Restaurant restaurant;
     @DBRef
     private User user;
+    private LocalDateTime timestamp;
     private List<OrderItem> items;
-
+    private OrderStatus status;
 }
