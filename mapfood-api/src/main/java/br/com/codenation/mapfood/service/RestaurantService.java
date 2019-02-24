@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class RestaurantService {
+public interface RestaurantService {
 }
