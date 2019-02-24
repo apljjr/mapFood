@@ -1,6 +1,10 @@
 package br.com.codenation.mapfood.service;
 
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 public class RouteService {
 
@@ -8,18 +12,39 @@ public class RouteService {
 
     private static final String URL_MAPS = "https://maps.googleapis.com/maps/api/directions/json?";
 
+//    @Autowired
+//    private MotorcyclistService motorcyclistService;
+//    private RestaurantService restaurantService;
 
     //Implementar algoritmo para realizar o cálculo de rota
 
-    public static String generateURL(GeoJsonPoint origin, GeoJsonPoint destiny){
+    private static String generateURL(GeoJsonPoint origin, GeoJsonPoint destiny, List<GeoJsonPoint> restautantLocation){
 
-        String url = URL_MAPS.concat("origin=" + origin.toString());
-        url = url.concat("&destiny=" + destiny.toString());
 
+        String url = URL_MAPS.concat("origin=" + origin.getY() + "," + origin.getX()) +
+                "&destiny=" + destiny.getY() + "," + destiny.getX()
+                +"&waypoints=" ;
+        if(restautantLocation.size()>1){
+            for (int i = 0; i < restautantLocation.size(); i++) {
+                if(i==0) {
+                    String via = "via:" + restautantLocation.get(i).getY() + "," + restautantLocation.get(i).getX();
+                    url = url.concat(via);
+                }
+                String via = "|via:" + restautantLocation.get(i).getY() + "," + restautantLocation.get(i).getX();
+                url = url.concat(via);
+            }
+        }
         return url.concat("&key=" + API_KEY);
     }
 
-    //procurar motoqueiro, verificar o motoqueiro com menor raio para o restaurante
+    public static String callService(GeoJsonPoint motorclycleLocation, GeoJsonPoint userLocation, List<GeoJsonPoint> restautantLocation){
+        String url = generateURL(motorclycleLocation, userLocation, restautantLocation);
 
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response
+                = restTemplate.getForEntity(url, String.class);
+
+        return response.getBody();
+    }
 
 }
