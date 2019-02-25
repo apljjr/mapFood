@@ -53,4 +53,5 @@ public class RestaurantsResource {
     public void generateRepost (HttpServletResponse response) throws JRException, IOException {
 
     }
+
 }

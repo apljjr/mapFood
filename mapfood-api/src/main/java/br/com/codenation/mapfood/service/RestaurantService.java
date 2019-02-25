@@ -15,6 +15,6 @@ import java.util.Optional;
 public interface RestaurantService {
 
     List<Restaurant> findByLocationNear(Point location, Distance distance);
-    Optional<Restaurant> findById (String id);
+    Restaurant findById (String id);
     Order getOldestReadyOrderByRestaurant(Order order);
 }
