@@ -15,42 +15,43 @@ import java.util.List;
 
 @Service
 public class MotorcyclistServiceImpl implements MotorcyclistService {
+    private final MotorcyclistRepository motorcyclistRepository;
 
     @Autowired
-    private MotorcyclistRepository repository;
+    public MotorcyclistServiceImpl (MotorcyclistRepository motorcyclistRepository) {
+        this.motorcyclistRepository = motorcyclistRepository;
+    }
 
     public Motorcyclist findTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
-
-
         List<Motorcyclist> allMotorcyclist =
-                repository.findByLocationNear(new Point(point.getX(), point.getY()), new Distance(distance, Metrics.KILOMETERS));
-
-
-        return allMotorcyclist.stream().filter(Motorcyclist::getAvailable).findFirst().orElseThrow(MotorcyclistNotFoundException::new);
-
+                motorcyclistRepository.findByLocationNear(
+                        new Point(point.getX(), point.getY()),
+                        new Distance(distance, Metrics.KILOMETERS));
+        return allMotorcyclist.stream()
+                .filter(Motorcyclist::getAvailable).findFirst()
+                .orElseThrow(MotorcyclistNotFoundException::new);
     }
 
     @Override
     public void turnOnAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(true);
-        repository.save(motorcyclist);
+        motorcyclistRepository.save(motorcyclist);
     }
 
     @Override
     public void turnOffAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(false);
-        repository.save(motorcyclist);
+        motorcyclistRepository.save(motorcyclist);
     }
 
     @Override
     public List<Motorcyclist> findAll() {
-
-        return repository.findAll();
+        return motorcyclistRepository.findAll();
     }
 
     @Override
     public Motorcyclist findById(String id) {
-        return repository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
+        return motorcyclistRepository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
     }
 
 

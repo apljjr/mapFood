@@ -13,10 +13,9 @@ import java.util.Optional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
+    private final RestaurantsRepository restaurantsRepository;
 
     @Autowired
-    private RestaurantsRepository restaurantsRepository;
-
     public RestaurantServiceImpl (RestaurantsRepository restaurantsRepository) {
         this.restaurantsRepository = restaurantsRepository;
     }
