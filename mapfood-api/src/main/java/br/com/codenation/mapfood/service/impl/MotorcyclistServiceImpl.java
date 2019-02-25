@@ -22,6 +22,19 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
         this.motorcyclistRepository = motorcyclistRepository;
     }
 
+
+    @Override
+    public List<Motorcyclist> findAll() {
+
+        return repository.findAll();
+    }
+
+    @Override
+    public Motorcyclist findById(String id) {
+        return repository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
+    }
+
+    @Override
     public Motorcyclist findTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
         List<Motorcyclist> allMotorcyclist =
                 motorcyclistRepository.findByLocationNear(
@@ -42,16 +55,6 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     public void turnOffAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(false);
         motorcyclistRepository.save(motorcyclist);
-    }
-
-    @Override
-    public List<Motorcyclist> findAll() {
-        return motorcyclistRepository.findAll();
-    }
-
-    @Override
-    public Motorcyclist findById(String id) {
-        return motorcyclistRepository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
     }
 
 

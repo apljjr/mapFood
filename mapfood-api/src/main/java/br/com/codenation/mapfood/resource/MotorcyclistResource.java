@@ -39,11 +39,11 @@ public class MotorcyclistResource {
         return motorcyclistService.findTheNearestMotorcyclist(point,distance);
     }
 
-//    @ApiOperation(value = "Find the a motorcyclist by id")
-//    @PutMapping(value = "/{id}")
-//    public Motorcyclist getById(@PathVariable("id") String id) {
-//        return service.findById(id);
-//    }
+    @ApiOperation(value = "Turn on Find the a motorcyclist by id")
+    @PutMapping(value = "/{id}")
+    public Motorcyclist getById(@PathVariable("id") String id) {
+        return service.findById(id);
+    }
 //
 //    @ApiOperation(value = "Update the available value of a motorcyclist")
 //    @PutMapping(value = "/{id}")
