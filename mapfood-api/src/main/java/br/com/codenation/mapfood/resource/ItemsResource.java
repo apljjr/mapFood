@@ -32,7 +32,8 @@ public class ItemsResource {
     @ApiOperation(value = "Find all the itens by restaurant")
     @GetMapping (value = "/findAllItensByRestaurant/{idRestaurant}", produces = "application/json")
     public ResponseEntity<?> findAllItensByRestaurant (@PathVariable("idRestaurant") String idRestaurant) {
-        Optional<Restaurant> restaurant = restaurantService.findById(idRestaurant);
-        return new ResponseEntity<>(restaurant.get().getItems(), HttpStatus.OK);
+        Restaurant restaurant = restaurantService.findById(idRestaurant);
+
+        return new ResponseEntity<>(restaurant.getItems(), HttpStatus.OK);
     }
 }

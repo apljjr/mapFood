@@ -50,9 +50,6 @@ public class RestaurantsResource {
     @ApiOperation(value = "Find restaurants by id")
     @GetMapping (value = "/{id}", produces = "application/json")
     public ResponseEntity<?> findRestaurantById(@PathVariable String id) {
-        Optional<Restaurant> restaurantOptional =
-                restaurantService.findById(id);
-
-        return new ResponseEntity<>(restaurantOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(restaurantService.findById(id), HttpStatus.OK);
     }
 }
