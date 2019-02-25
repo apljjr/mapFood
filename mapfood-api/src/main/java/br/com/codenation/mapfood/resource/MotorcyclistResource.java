@@ -42,7 +42,7 @@ public class MotorcyclistResource {
     @ApiOperation(value = "Turn on Find the a motorcyclist by id")
     @PutMapping(value = "/{id}")
     public Motorcyclist getById(@PathVariable("id") String id) {
-        return service.findById(id);
+        return motorcyclistService.findById(id);
     }
 //
 //    @ApiOperation(value = "Update the available value of a motorcyclist")
