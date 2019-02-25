@@ -3,6 +3,7 @@ package br.com.codenation.mapfood.service.impl;
 import br.com.codenation.mapfood.document.Order;
 import br.com.codenation.mapfood.document.OrderStatus;
 import br.com.codenation.mapfood.document.Restaurant;
+import br.com.codenation.mapfood.document.User;
 import br.com.codenation.mapfood.exception.OrderNotFoundException;
 import br.com.codenation.mapfood.exception.RestaurantNotFoundException;
 import br.com.codenation.mapfood.repository.OrdersRepository;
@@ -10,23 +11,26 @@ import br.com.codenation.mapfood.repository.RestaurantsRepository;
 import br.com.codenation.mapfood.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
 
-    @Autowired
-    private RestaurantsRepository restaurantsRepository;
+
+    private final RestaurantsRepository restaurantsRepository;
+
+    private final OrdersRepository ordersRepository;
 
     @Autowired
-    private OrdersRepository ordersRepository;
-
-    public RestaurantServiceImpl(RestaurantsRepository restaurantsRepository) {
+    public RestaurantServiceImpl(RestaurantsRepository restaurantsRepository, OrdersRepository ordersRepository) {
         this.restaurantsRepository = restaurantsRepository;
+        this.ordersRepository = ordersRepository;
     }
 
     @Override
@@ -49,6 +53,17 @@ public class RestaurantServiceImpl implements RestaurantService {
         return allOrders.stream().filter(o -> o.getStatus().equals(OrderStatus.READY))
                                 .sorted(Comparator.comparing(Order::getTimestamp).reversed())
                                 .findFirst().orElseThrow(OrderNotFoundException::new);
+
+    }
+
+    @Override
+    public List<Order> getAllOrdersNearOldestReadyOrder(User oldestOrderUser, String restaurantId, double distance){
+
+        List<Order> allOrders = ordersRepository.
+                                findByRestaurantIdAndLocationNear(restaurantId,
+                                    oldestOrderUser.getLocation(),new Distance(distance, Metrics.KILOMETERS));
+
+        return allOrders.stream().filter(o -> o.getStatus().equals(OrderStatus.READY)).limit(5).collect(Collectors.toList());
 
     }
 

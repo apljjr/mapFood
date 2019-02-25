@@ -2,6 +2,7 @@ package br.com.codenation.mapfood.service;
 
 import br.com.codenation.mapfood.document.Order;
 import br.com.codenation.mapfood.document.Restaurant;
+import br.com.codenation.mapfood.document.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Distance;
@@ -15,6 +16,10 @@ import java.util.Optional;
 public interface RestaurantService {
 
     List<Restaurant> findByLocationNear(Point location, Distance distance);
+
     Restaurant findById (String id);
+
     Order getOldestReadyOrderByRestaurant(Order order);
+
+    List<Order> getAllOrdersNearOldestReadyOrder(User oldestOrderUser, String restaurantId, double distance);
 }

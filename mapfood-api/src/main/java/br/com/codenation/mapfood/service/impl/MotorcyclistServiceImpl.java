@@ -26,12 +26,12 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
     @Override
     public List<Motorcyclist> findAll() {
 
-        return repository.findAll();
+        return motorcyclistRepository.findAll();
     }
 
     @Override
     public Motorcyclist findById(String id) {
-        return repository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
+        return motorcyclistRepository.findById(id).orElseThrow(MotorcyclistNotFoundException::new);
     }
 
     @Override
