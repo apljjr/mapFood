@@ -16,14 +16,18 @@ import java.util.List;
 @RequestMapping(value = "/motorcyclists")
 public class MotorcyclistResource {
 
+    private final MotorcyclistService motorcyclistService;
+
     @Autowired
-    private MotorcyclistService service;
+    public MotorcyclistResource (MotorcyclistService motorcyclistService) {
+        this.motorcyclistService = motorcyclistService;
+    }
 
     @ApiOperation(value = "Find all registered motorcyclists")
     @GetMapping(value = "")
     public List<Motorcyclist> getAll() {
 
-        return service.findAll();
+        return motorcyclistService.findAll();
     }
 
     @ApiOperation(value = "Find all available motorcyclists near a point")
@@ -32,7 +36,7 @@ public class MotorcyclistResource {
 
         GeoJsonPoint point = new GeoJsonPoint(-51.210998,-30.034283 );
 
-        return service.findTheNearestMotorcyclist(point,distance);
+        return motorcyclistService.findTheNearestMotorcyclist(point,distance);
     }
 
 //    @ApiOperation(value = "Find the a motorcyclist by id")

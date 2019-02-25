@@ -22,13 +22,12 @@ import java.util.Optional;
 @RequestMapping (value = "/itens")
 public class ItemsResource {
 
-    @Autowired
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
+    @Autowired
     public ItemsResource (RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
-
 
     @ApiOperation(value = "Find all the itens by restaurant")
     @GetMapping (value = "/findAllItensByRestaurant/{idRestaurant}", produces = "application/json")
