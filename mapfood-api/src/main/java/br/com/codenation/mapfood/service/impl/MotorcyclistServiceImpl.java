@@ -36,24 +36,27 @@ public class MotorcyclistServiceImpl implements MotorcyclistService {
 
     @Override
     public Motorcyclist findTheNearestMotorcyclist(GeoJsonPoint point, double distance) {
-        List<Motorcyclist> allMotorcyclist =
-                motorcyclistRepository.findByLocationNear(
-                        new Point(point.getX(), point.getY()),
-                        new Distance(distance, Metrics.KILOMETERS));
-        return allMotorcyclist.stream()
-                .filter(Motorcyclist::getAvailable).findFirst()
-                .orElseThrow(MotorcyclistNotFoundException::new);
+        List<Motorcyclist> allMotorcyclist = motorcyclistRepository.findByLocationNear(
+            new Point(point.getX(), point.getY()), new Distance(distance, Metrics.KILOMETERS));
+
+        return allMotorcyclist
+            .stream()
+            .filter(Motorcyclist::getAvailable)
+            .findFirst()
+            .orElseThrow(MotorcyclistNotFoundException::new);
     }
 
     @Override
-    public void turnOnAvailable(Motorcyclist motorcyclist){
+    public void turnOnAvailable(Motorcyclist motorcyclist) {
         motorcyclist.setAvailable(true);
+
         motorcyclistRepository.save(motorcyclist);
     }
 
     @Override
     public void turnOffAvailable(Motorcyclist motorcyclist){
         motorcyclist.setAvailable(false);
+
         motorcyclistRepository.save(motorcyclist);
     }
 

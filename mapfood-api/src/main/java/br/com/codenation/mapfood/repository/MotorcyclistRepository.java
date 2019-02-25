@@ -11,9 +11,5 @@ import java.util.List;
 
 public interface MotorcyclistRepository extends MongoRepository<Motorcyclist, String>{
 
-    List<Motorcyclist> findByLocationWithin(Circle c);
-
     List<Motorcyclist> findByLocationNear(Point point, Distance distance);
-
-
 }

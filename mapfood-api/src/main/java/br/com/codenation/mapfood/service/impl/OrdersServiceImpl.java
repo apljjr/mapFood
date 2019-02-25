@@ -21,6 +21,7 @@ import static br.com.codenation.mapfood.document.OrderStatus.PENDING;
 
 @Service
 public class OrdersServiceImpl implements OrdersService  {
+
     private final OrdersRepository ordersRepository;
     private final RestaurantsRepository restaurantsRepository;
 
@@ -35,18 +36,19 @@ public class OrdersServiceImpl implements OrdersService  {
         String restaurantId = order.getRestaurant().getId();
 
         Optional<Restaurant> restaurant = restaurantsRepository.findById(restaurantId);
+
         boolean isValidOrder;
 
         if (restaurant.isPresent()) {
             List<String> incomingItemIds = order.getItems()
-                    .stream()
-                    .map(item -> item.getItem().getId())
-                    .collect(Collectors.toList());
+                .stream()
+                .map(item -> item.getItem().getId())
+                .collect(Collectors.toList());
 
             List<String> restaurantItemIds = restaurant.get().getItems()
-                    .stream()
-                    .map(Item::getId)
-                    .collect(Collectors.toList());
+                .stream()
+                .map(Item::getId)
+                .collect(Collectors.toList());
 
             isValidOrder = restaurantItemIds.containsAll(incomingItemIds);
         } else {
@@ -56,10 +58,11 @@ public class OrdersServiceImpl implements OrdersService  {
         if (isValidOrder) {
             order.setStatus(PENDING);
             order.setTimestamp(LocalDateTime.now());
+
             return ordersRepository.save(order);
         }
 
-        throw new InvalidOrderException("Só é permitido pedidos de um resturante por vez!");
+        throw new InvalidOrderException("Só é permitido receber pedidos de um restaurante por vez!");
     }
 
     @Override
