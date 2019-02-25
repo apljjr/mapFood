@@ -2,6 +2,7 @@ package br.com.codenation.mapfood.resource;
 
 import br.com.codenation.mapfood.document.Restaurant;
 import br.com.codenation.mapfood.repository.RestaurantsRepository;
+import br.com.codenation.mapfood.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.bson.types.ObjectId;
@@ -27,7 +28,11 @@ import java.util.Optional;
 public class RestaurantsResource {
 
     @Autowired
-    private RestaurantsRepository restaurantsRepository;
+    private RestaurantService restaurantService;
+
+    public RestaurantsResource (RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
 
     @ApiOperation(value = "Find restaurants within radius")
     @GetMapping (produces = "application/json")
@@ -37,7 +42,7 @@ public class RestaurantsResource {
 
         Point userLocation = new Point(longitude, latitude);
         Distance distance = new Distance(radius, Metrics.KILOMETERS);
-        List<Restaurant> restaurantList = restaurantsRepository.findByLocationNear(userLocation, distance);
+        List<Restaurant> restaurantList = restaurantService.findByLocationNear(userLocation, distance);
 
         return new ResponseEntity<List>(restaurantList, HttpStatus.OK);
     }
@@ -46,7 +51,7 @@ public class RestaurantsResource {
     @GetMapping (value = "/{id}", produces = "application/json")
     public ResponseEntity<?> findRestaurantById(@PathVariable String id) {
         Optional<Restaurant> restaurantOptional =
-            restaurantsRepository.findById(id);
+                restaurantService.findById(id);
 
         return new ResponseEntity<>(restaurantOptional.get(), HttpStatus.OK);
     }

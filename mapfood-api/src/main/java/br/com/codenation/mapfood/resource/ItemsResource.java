@@ -2,6 +2,7 @@ package br.com.codenation.mapfood.resource;
 
 import br.com.codenation.mapfood.document.Restaurant;
 import br.com.codenation.mapfood.repository.RestaurantsRepository;
+import br.com.codenation.mapfood.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,17 @@ import java.util.Optional;
 public class ItemsResource {
 
     @Autowired
-    private RestaurantsRepository restaurantsRepository;
+    private RestaurantService restaurantService;
+
+    public ItemsResource (RestaurantService restaurantService) {
+        this.restaurantService = restaurantService;
+    }
+
 
     @ApiOperation(value = "Find all the itens by restaurant")
     @GetMapping (value = "/findAllItensByRestaurant/{idRestaurant}", produces = "application/json")
     public ResponseEntity<?> findAllItensByRestaurant (@PathVariable("idRestaurant") String idRestaurant) {
-        Optional<Restaurant> restaurant = restaurantsRepository.findById(idRestaurant);
+        Optional<Restaurant> restaurant = restaurantService.findById(idRestaurant);
         return new ResponseEntity<>(restaurant.get().getItems(), HttpStatus.OK);
     }
 }
