@@ -10,9 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 @Data
 public class User {
+
     @Id
     private String id;
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
-
 }

@@ -16,5 +16,4 @@ public interface MotorcyclistService {
     public void turnOnAvailable(Motorcyclist motorcyclist);
 
     public void turnOffAvailable(Motorcyclist motorcyclist);
-
 }

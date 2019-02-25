@@ -16,11 +16,13 @@ public class Restaurant {
 
     @Id
     private String id;
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
-    private String restaurant;
+
     private String address_city;
     private String dish_description;
-    private String original_id;
     private List<Item> items;
+    private String original_id;
+    private String restaurant;
 }

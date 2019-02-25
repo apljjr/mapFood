@@ -13,11 +13,14 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
+
     @DBRef
     private Restaurant restaurant;
+
     @DBRef
     private User user;
-    private LocalDateTime timestamp;
+
     private List<OrderItem> items;
     private OrderStatus status;
+    private LocalDateTime timestamp;
 }

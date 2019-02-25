@@ -17,8 +17,6 @@ public class Motorcyclist {
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint location;
 
-    private String original_id;
-
     private Boolean available;
-
+    private String original_id;
 }
