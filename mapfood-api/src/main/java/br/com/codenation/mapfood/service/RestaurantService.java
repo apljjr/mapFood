@@ -17,4 +17,6 @@ public interface RestaurantService {
     Order getOldestReadyOrderByRestaurant(Order order);
 
     List<Order> getAllOrdersNearOldestReadyOrder(User oldestOrderUser, String restaurantId, double distance);
+
+    List<Restaurant> findAll();
 }

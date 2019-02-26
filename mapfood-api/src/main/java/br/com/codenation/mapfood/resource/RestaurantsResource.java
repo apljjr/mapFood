@@ -10,18 +10,14 @@ import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Api (value = "Restaurant", description = "Manipulating Restaurant")
 @RestController
 @RequestMapping (value = "/restaurants")
-public class RestaurantsResource {
+public class RestaurantsResource implements Resource<Restaurant>{
 
     private final RestaurantService restaurantService;
 
@@ -43,9 +39,17 @@ public class RestaurantsResource {
         return new ResponseEntity<List>(restaurantList, HttpStatus.OK);
     }
 
+    @Override
+    @ApiOperation(value = "Find all registered motorcyclists")
+    @GetMapping(value = "")
+    public ResponseEntity<List<Restaurant>> findAll() {
+        return new ResponseEntity<>(restaurantService.findAll(),HttpStatus.OK);
+    }
+
+    @Override
     @ApiOperation(value = "Find restaurants by id")
     @GetMapping (value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> findRestaurantById(@PathVariable String id) {
+    public ResponseEntity<?> findById(@PathVariable String id) {
         return new ResponseEntity<>(restaurantService.findById(id), HttpStatus.OK);
     }
 }
