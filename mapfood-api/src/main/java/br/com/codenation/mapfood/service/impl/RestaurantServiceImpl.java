@@ -60,7 +60,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Order> getAllOrdersNearOldestReadyOrder(User oldestOrderUser, String restaurantId, double distance){
 
         List<Order> allOrders = ordersRepository.
-                                findByRestaurantIdAndLocationNear(restaurantId,
+                findByRestaurantIdAndUserLocationNear(restaurantId,
                                     oldestOrderUser.getLocation(),new Distance(distance, Metrics.KILOMETERS));
 
         return allOrders.stream().filter(o -> o.getStatus().equals(OrderStatus.READY)).limit(5).collect(Collectors.toList());

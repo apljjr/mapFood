@@ -5,18 +5,21 @@ import br.com.codenation.mapfood.document.Restaurant;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
 public interface OrdersRepository extends MongoRepository<Order, String> {
 
+    List<Order> findByUserId(String userId);
+
     List<Order> findByRestaurant(Restaurant restaurant);
 
-    @Query("{Restaurant._id : ?0}")
-    public List<Order> findByRestaurantId(String id);
+//    @Query("{Restaurant._id : ?0}")
+    List<Order> findByRestaurantId(String id);
 
-    @Query("{Restaurant._id : ?0}")
-    List<Order> findByRestaurantIdAndLocationNear(String id, Point point, Distance distance);
+//    @Query("{Restaurant._id : ?0}")
+    List<Order> findByRestaurantIdAndUserLocationNear(String restaurantId, Point point, Distance distance);
+
+    List<Order> findByMotorcyclistId(String motorcyclistId);
 
 }

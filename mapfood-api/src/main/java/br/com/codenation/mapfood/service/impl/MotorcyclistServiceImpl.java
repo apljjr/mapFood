@@ -1,9 +1,12 @@
 package br.com.codenation.mapfood.service.impl;
 
 import br.com.codenation.mapfood.document.Motorcyclist;
+import br.com.codenation.mapfood.document.Order;
+import br.com.codenation.mapfood.document.Restaurant;
 import br.com.codenation.mapfood.exception.MotorcyclistNotFoundException;
 import br.com.codenation.mapfood.repository.MotorcyclistRepository;
 import br.com.codenation.mapfood.service.MotorcyclistService;
+import br.com.codenation.mapfood.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;

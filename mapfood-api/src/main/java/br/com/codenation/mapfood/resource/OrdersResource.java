@@ -1,5 +1,6 @@
 package br.com.codenation.mapfood.resource;
 
+import br.com.codenation.mapfood.document.Motorcyclist;
 import br.com.codenation.mapfood.document.Order;
 import br.com.codenation.mapfood.exception.InvalidOrderException;
 import br.com.codenation.mapfood.service.OrdersService;
@@ -39,5 +40,10 @@ public class OrdersResource {
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOne(@PathVariable String id) {
         return new ResponseEntity<>(ordersService.getOne(id), HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<List<Order>> processOrdersToDeliver(@RequestBody Motorcyclist motorcyclist) {
+        return new ResponseEntity<>(ordersService.processOrdersToDeliver(motorcyclist), HttpStatus.OK);
     }
 }
