@@ -13,6 +13,7 @@ import java.util.List;
 @Document(collection = "orders")
 @Data
 public class Order {
+
     @Id
     private String id;
 

@@ -14,10 +14,8 @@ public interface OrdersRepository extends MongoRepository<Order, String> {
 
     List<Order> findByRestaurant(Restaurant restaurant);
 
-//    @Query("{Restaurant._id : ?0}")
     List<Order> findByRestaurantId(String id);
 
-//    @Query("{Restaurant._id : ?0}")
     List<Order> findByRestaurantIdAndUserLocationNear(String restaurantId, Point point, Distance distance);
 
     List<Order> findByMotorcyclistId(String motorcyclistId);

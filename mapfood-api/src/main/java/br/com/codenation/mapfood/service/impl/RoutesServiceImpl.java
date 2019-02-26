@@ -24,45 +24,50 @@ public class RoutesServiceImpl implements RoutesService {
 
     public RoutesServiceImpl() {
         this.context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
+            .apiKey(API_KEY)
+            .build();
     }
 
     @Override
     public DirectionsResult getRoute(GeoJsonPoint origin, List<GeoJsonPoint> points) {
         List<DirectionsApiRequest.Waypoint> initialWaypoints = points.stream()
-                .map(point -> {
+            .map(
+                point -> {
                     Double lng = point.getCoordinates().get(0);
                     Double lat = point.getCoordinates().get(1);
+
                     return new DirectionsApiRequest.Waypoint(new LatLng(lat, lng));
-                })
-                .collect(Collectors.toList());
+                }
+            )
+            .collect(Collectors.toList());
+
         GeoJsonPoint destination = points.get(0);
 
         LatLng originPoint = new LatLng(origin.getCoordinates().get(1), origin.getCoordinates().get(0));
         LatLng destinationPoint = new LatLng(destination.getCoordinates().get(1), destination.getCoordinates().get(0));
 
         List<DirectionsApiRequest.Waypoint> waypoints = new ArrayList<>();
+
         if (initialWaypoints.size() > 1) {
             waypoints = initialWaypoints.subList(1, initialWaypoints.size() - 1);
         }
 
         String originStr = originPoint.lat + "," + originPoint.lng;
         String destinationStr = destinationPoint.lat + "," + destinationPoint.lng;
+
         DirectionsResult directions = null;
+
         try {
             directions = DirectionsApi.getDirections(context, originStr, destinationStr)
-                    .waypoints(waypoints.toArray(new DirectionsApiRequest.Waypoint[waypoints.size()]))
-                    .mode(TravelMode.DRIVING)
-                    .optimizeWaypoints(true)
-                    .await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+                .waypoints(waypoints.toArray(new DirectionsApiRequest.Waypoint[waypoints.size()]))
+                .mode(TravelMode.DRIVING)
+                .optimizeWaypoints(true)
+                .await();
+        }
+        catch (ApiException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
+
         return directions;
     }
 }

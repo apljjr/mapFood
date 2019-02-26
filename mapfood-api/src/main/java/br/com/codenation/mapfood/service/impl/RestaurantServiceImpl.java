@@ -22,9 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
 
-
     private final RestaurantsRepository restaurantsRepository;
-
     private final OrdersRepository ordersRepository;
 
     @Autowired
@@ -46,26 +44,26 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Order getOldestReadyOrderByRestaurant(Order order) {
-
         List<Order> allOrders = ordersRepository.findByRestaurantId(order.getRestaurant().getId());
 
-
-        return allOrders.stream().filter(o -> o.getStatus().equals(OrderStatus.READY))
-                                .sorted(Comparator.comparing(Order::getTimestamp).reversed())
-                                .findFirst().orElseThrow(OrderNotFoundException::new);
-
+        return allOrders.stream()
+            .filter(o -> o.getStatus().equals(OrderStatus.READY))
+            .sorted(Comparator.comparing(Order::getTimestamp).reversed())
+            .findFirst()
+            .orElseThrow(OrderNotFoundException::new);
     }
 
     @Override
     public List<Order> getAllOrdersNearOldestReadyOrder(User oldestOrderUser, String restaurantId, double distance){
 
-        List<Order> allOrders = ordersRepository.
-                findByRestaurantIdAndUserLocationNear(restaurantId,
-                                    oldestOrderUser.getLocation(),new Distance(distance, Metrics.KILOMETERS));
+        List<Order> allOrders = ordersRepository.findByRestaurantIdAndUserLocationNear(
+            restaurantId,
+            oldestOrderUser.getLocation(),
+            new Distance(distance, Metrics.KILOMETERS));
 
-        return allOrders.stream().filter(o -> o.getStatus().equals(OrderStatus.READY)).limit(5).collect(Collectors.toList());
-
+        return allOrders.stream()
+            .filter(o -> o.getStatus().equals(OrderStatus.READY))
+            .limit(5)
+            .collect(Collectors.toList());
     }
-
-
 }

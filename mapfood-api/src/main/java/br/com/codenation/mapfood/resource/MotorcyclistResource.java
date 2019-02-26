@@ -6,9 +6,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "Motorcyclist", description = "Manipulating Motorcyclist")
@@ -44,14 +47,4 @@ public class MotorcyclistResource {
     public Motorcyclist getById(@PathVariable("id") String id) {
         return motorcyclistService.findById(id);
     }
-//
-//    @ApiOperation(value = "Update the available value of a motorcyclist")
-//    @PutMapping(value = "/{id}")
-//    public void updateById(@PathVariable("id") String id, @Valid @RequestBody Motorcyclist motorcyclist) {
-//        motorcyclist.set_id(id);
-//        service.save(motorcyclist);
-//    }
-
-
-
 }

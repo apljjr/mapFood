@@ -13,40 +13,48 @@ public class RouteServiceImpl implements RouteService {
 
     private static final String URL_MAPS = "https://maps.googleapis.com/maps/api/directions/json?";
 
-//    @Autowired
-//    private MotorcyclistService motorcyclistService;
-//    private RestaurantService restaurantService;
-
-    //Implementar algoritmo para realizar o cálculo de rota
-
     @Override
     public String callService(GeoJsonPoint motorclycleLocation, GeoJsonPoint userLocation, List<GeoJsonPoint> restautantLocation){
         String url = generateURL(motorclycleLocation, userLocation, restautantLocation);
-
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response
-                = restTemplate.getForEntity(url, String.class);
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         return response.getBody();
     }
 
     private String generateURL(GeoJsonPoint origin, GeoJsonPoint destiny, List<GeoJsonPoint> restautantLocation){
+        StringBuilder sb = new StringBuilder();
 
+        sb.append(URL_MAPS);
+        sb.append("origin=");
+        sb.append(origin.getY());
+        sb.append(",");
+        sb.append(origin.getX());
+        sb.append("&destiny=");
+        sb.append(destiny.getY());
+        sb.append(",");
+        sb.append("&waypoints=");
 
-        String url = URL_MAPS.concat("origin=" + origin.getY() + "," + origin.getX()) +
-                "&destiny=" + destiny.getY() + "," + destiny.getX()
-                +"&waypoints=" ;
-        if(restautantLocation.size()>1){
+        if (restautantLocation.size() > 1){
             for (int i = 0; i < restautantLocation.size(); i++) {
-                if(i==0) {
-                    String via = "via:" + restautantLocation.get(i).getY() + "," + restautantLocation.get(i).getX();
-                    url = url.concat(via);
+                if (i == 0) {
+                    sb.append("via:");
+                    sb.append(restautantLocation.get(i).getY());
+                    sb.append(",");
+                    sb.append(restautantLocation.get(i).getX());
                 }
-                String via = "|via:" + restautantLocation.get(i).getY() + "," + restautantLocation.get(i).getX();
-                url = url.concat(via);
+
+                sb.append("|via:");
+                sb.append(restautantLocation.get(i).getY());
+                sb.append(",");
+                sb.append(restautantLocation.get(i).getX());
             }
         }
-        return url.concat("&key=" + API_KEY);
+
+        sb.append("&key=" + API_KEY);
+
+        return sb.toString();
     }
 
 }
