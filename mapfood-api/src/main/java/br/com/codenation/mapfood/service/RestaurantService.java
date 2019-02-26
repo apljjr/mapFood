@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RestaurantService {
 
-    List<Restaurant> findByLocationNear(Point location, Distance distance);
+    List<Restaurant> findByLocationNear(double latitude, double longitude, double radius);
 
     Restaurant findById (String id);
 

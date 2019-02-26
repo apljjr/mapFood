@@ -1,7 +1,6 @@
 package br.com.codenation.mapfood.resource;
 
 import br.com.codenation.mapfood.document.Restaurant;
-import br.com.codenation.mapfood.repository.RestaurantsRepository;
 import br.com.codenation.mapfood.service.RestaurantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,10 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Api (value = "Itens", description = "Manipulating Itens")
 @RestController

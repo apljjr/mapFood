@@ -32,7 +32,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> findByLocationNear(Point location, Distance distance) {
+    public List<Restaurant> findByLocationNear(double latitude, double longitude,
+                                               double radius) {
+        Point location = new Point(longitude, latitude);
+        Distance distance = new Distance(radius, Metrics.KILOMETERS);
+
         return restaurantsRepository.findByLocationNear(location, distance);
     }
 
@@ -65,5 +69,10 @@ public class RestaurantServiceImpl implements RestaurantService {
             .filter(o -> o.getStatus().equals(OrderStatus.READY))
             .limit(5)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Restaurant> findAll() {
+        return restaurantsRepository.findAll();
     }
 }
